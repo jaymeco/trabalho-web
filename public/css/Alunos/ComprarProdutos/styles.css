@@ -1,0 +1,32 @@
+.more-btn {
+  border-radius: 50%;
+  border: 1px solid var(--info);
+  color: var(--info);
+  height: 2rem;
+  width: 2rem;
+  transition: ease-in-out 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#page-container .more-btn::after {
+  display: none !important;
+}
+
+.more-btn:hover {
+  background-color: var(--info);
+  color: var(--white);
+}
+
+.products-container {
+  width: 100%;
+}
+
+.m-t-50 {
+  margin-top: 50px;
+}
+
+.font-p {
+  font-size: small;
+}

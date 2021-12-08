@@ -1,0 +1,11 @@
+#banner-image {
+  height: 100vh;
+}
+
+#form-cadastro {
+  height: 80%;
+}
+
+#form-cadastro button {
+  width: 30%;
+}

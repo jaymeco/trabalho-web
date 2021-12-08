@@ -1,0 +1,41 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap');
+$primary: #5685E8 !default;
+$secondary: #283D6B;
+$success: #4AE850;
+$info: #4BD2EB;
+$warning: #EBC22C;
+$danger: #ED3B26;
+
+$custom-theme: (
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "success":    $success,
+  "danger":     $danger,
+);
+$input-border-color: $primary;
+
+$font-family-headers: 'Archivo';
+$font-family-text: 'Poppins';
+
+$font-family-sans-serif: 'Archivo';
+
+@each $color, $value in $custom-theme {
+  .btn-#{$color} {
+    color: #fff !important;
+    &:hover {
+      color: #fff !important;
+    }
+  }
+}
+
+body, input, textarea, button {
+  font-family: $font-family-text !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-headers !important;
+}
+
+
+@import "../bootstrap/scss/bootstrap";

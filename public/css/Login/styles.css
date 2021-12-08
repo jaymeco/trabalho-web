@@ -1,0 +1,40 @@
+header {
+  padding: 1rem;
+  border-radius: 5px;
+  background-color: #4BD2EB;
+  display: flex;
+  align-items: center;
+
+}
+
+header section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+header div {
+  margin-left: auto;
+}
+
+header img {
+  height: 100px;
+  width: 100px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.teste {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.85rem;
+}
+
+.teste span {
+  margin-left: 1rem;
+  font-size: 30px;
+}
