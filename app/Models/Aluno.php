@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class Aluno extends Authenticatable
 {
   use HasApiTokens, HasFactory, Notifiable;
 
@@ -18,27 +18,24 @@ class User extends Authenticatable
    * @var array<int, string>
    */
   protected $fillable = [
-    'username',
-    'password',
-  ];
-  protected $table = 'users';
-  protected $primaryKey = 'id';
-  public $incrementing = true;
-  /**
-   * The attributes that should be hidden for serialization.
-   *
-   * @var array<int, string>
-   */
-  protected $hidden = [
-    'password',
+    'nome',
+    'turma',
+    'email',
+    'turno',
+    'saldo',
+    'user_id',
+    'telefone',
+    'escola_id',
+    'responsavel_id',
+    'matricula',
   ];
 
-  // /**
-  //  * The attributes that should be cast.
-  //  *
-  //  * @var array<string, string>
-  //  */
-  // protected $casts = [
-  //   'email_verified_at' => 'datetime',
-  // ];
+  protected $hidden = [
+    'created_at',
+    'updated_at',
+  ];
+
+  protected $table = 'aluno';
+  protected $primaryKey = 'id';
+  public $incrementing = true;
 }

@@ -6,9 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sistema ABC</title>
-  <link rel="stylesheet" href="{{asset('scss/theme.css')}}">
-  <link rel="stylesheet" href="{{asset('css/global.css')}}">
-  <link rel="stylesheet" href="{{asset('css/Funcionario/ListarProdutos/styles.css')}}">
+  <link rel="stylesheet" href="{{ asset('scss/theme.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/global.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/Funcionario/ListarProdutos/styles.css') }}">
   <script src="https://kit.fontawesome.com/47d0300dca.js" crossorigin="anonymous"></script>
 </head>
 
@@ -21,13 +21,17 @@
           <a class="nav-link active" aria-current="page" href="/Responsavel">Alunos</a>
         </li>
         <li class="nav-item text-start">
-          <a class="nav-link" aria-current="page" href="/Responsavel/alunos/produtos/bloquear">Bloquear produtos</a>
+          <a class="nav-link" aria-current="page" href="/Responsavel/alunos/produtos/bloquear">Bloquear
+            produtos</a>
         </li>
         <li class="nav-item text-start">
           <a class="nav-link" href="/Responsavel/alunos/depositos">Extrato de depósitos</a>
         </li>
         <li class="nav-item text-start">
-          <a class="nav-link" href="/">Sair</a>
+          <form id="logout-form" action="{{ route('logout.execute') }}" method="POST">
+            @csrf
+            <a class="nav-link" href="javascript: document.forms['logout-form'].submit();">Sair</a>
+          </form>
         </li>
       </ul>
     </aside>
@@ -52,24 +56,30 @@
               </button>
             </a>
           </div>
-          <form class="container needs-validation" novalidate>
+          <form method="POST" action="{{ route('responsavel.adicionar.aluno.execute') }}"
+            class="container needs-validation" novalidate>
+            @csrf
             <div class="d-flex col-md-12 justify-content-evenly mt-3">
               <div class="d-inline-block form-floating col-md-5">
-                <input type="text" name="nome" class="form-control" id="floatingInput" placeholder="Fulano de tal" required>
+                <input type="text" name="nome" class="form-control" id="floatingInput" placeholder="Fulano de tal"
+                  required>
                 <label for="floatingInput">Nome</label>
               </div>
               <div class="d-inline-block form-floating col-md-5">
-                <input type="text" name="matricula" class="form-control" id="floatingMatricula" placeholder="14117063" required>
+                <input type="text" name="matricula" class="form-control" id="floatingMatricula" placeholder="14117063"
+                  required>
                 <label for="floatingMatricula">Matrícula</label>
               </div>
             </div>
             <div class="d-flex col-md-12 justify-content-evenly mt-3">
               <div class="d-inline-block form-floating col-md-5">
-                <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="name@example.com" required>
+                <input type="email" name="email" class="form-control" id="floatingEmail"
+                  placeholder="name@example.com" required>
                 <label for="floatingEmail">Email</label>
               </div>
               <div class="d-inline-block form-floating col-md-5">
-                <input type="text" name="telefone" class="form-control" id="floatingTelefone" placeholder="(71)99999-9999" required>
+                <input type="text" name="telefone" class="form-control" id="floatingTelefone"
+                  placeholder="(71)99999-9999" required>
                 <label for="floatingTelefone">Telefone</label>
               </div>
             </div>
@@ -79,7 +89,8 @@
                 <label for="floatingTurma">Turma</label>
               </div>
               <div class="d-inline-block form-floating col-md-5">
-                <input type="text" name="turno" class="form-control" id="floatingTurno" placeholder="Noturno" required>
+                <input type="text" name="turno" class="form-control" id="floatingTurno" placeholder="Noturno"
+                  required>
                 <label for="floatingTurno">Turno</label>
               </div>
             </div>
@@ -89,7 +100,8 @@
                 <label for="floatingLogin">Login</label>
               </div>
               <div class="d-inline-block form-floating col-md-5">
-                <input type="text" name="senha" class="form-control" id="floatingPassword" placeholder="password$123" required>
+                <input type="password" name="senha" class="form-control" id="floatingPassword"
+                  placeholder="password$123" required>
                 <label for="floatingPassword">Senha</label>
               </div>
             </div>
@@ -128,11 +140,40 @@
       </div>
     </div>
   </section>
+  <div class="toast-container position-absolute" id="toastPlacement" style="position: absolute; top: 5px; right: 40%;">
+    <div id="success-toast" class="toast align-items-center text-white bg-success border-0" role="alert"
+      aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          @if (session('success'))
+            {{ session('success') }}
+          @endif
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+          aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+  <div class="toast-container position-absolute" id="toastPlacement" style="position: absolute; top: 5px; right: 40%;">
+    <div id="error-toast" class="toast align-items-center text-white bg-danger border-0" role="alert"
+      aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          @if (session('error'))
+            {{ session('error') }}
+          @endif
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+          aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-    crossorigin="anonymous"></script>
+    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
   <script>
-    (function () {
+    (function() {
       'use strict'
 
       // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -140,8 +181,8 @@
 
       // Loop over them and prevent submission
       Array.prototype.slice.call(forms)
-        .forEach(function (form) {
-          form.addEventListener('submit', function (event) {
+        .forEach(function(form) {
+          form.addEventListener('submit', function(event) {
             if (!form.checkValidity()) {
               event.preventDefault()
               event.stopPropagation()
@@ -152,6 +193,20 @@
         })
     })()
   </script>
+  @if (session('success'))
+    <script>
+      var mySuccessAlert = document.getElementById('success-toast'); //select id of toast
+      var bsSuccessAlert = new bootstrap.Toast(mySuccessAlert); //inizialize it
+      bsSuccessAlert.show();
+    </script>
+  @endif
+  @if (session('error'))
+    <script>
+      var myAlert = document.getElementById('error-toast'); //select id of toast
+      var bsAlert = new bootstrap.Toast(myAlert); //inizialize it
+      bsAlert.show();
+    </script>
+  @endif
 </body>
 
 </html>

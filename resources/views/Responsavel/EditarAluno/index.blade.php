@@ -6,9 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sistema ABC</title>
-  <link rel="stylesheet" href="{{asset('scss/theme.css')}}">
-  <link rel="stylesheet" href="{{asset('css/global.css')}}">
-  <link rel="stylesheet" href="{{asset('css/Funcionario/ListarProdutos/styles.css')}}">
+  <link rel="stylesheet" href="{{ asset('scss/theme.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/global.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/Funcionario/ListarProdutos/styles.css') }}">
   <script src="https://kit.fontawesome.com/47d0300dca.js" crossorigin="anonymous"></script>
 </head>
 
@@ -21,13 +21,17 @@
           <a class="nav-link active" aria-current="page" href="/Responsavel">Alunos</a>
         </li>
         <li class="nav-item text-start">
-          <a class="nav-link" aria-current="page" href="/Responsavel/alunos/produtos/bloquear">Bloquear produtos</a>
+          <a class="nav-link" aria-current="page" href="/Responsavel/alunos/produtos/bloquear">Bloquear
+            produtos</a>
         </li>
         <li class="nav-item text-start">
           <a class="nav-link" href="/Responsavel/alunos/depositos">Extrato de depósitos</a>
         </li>
         <li class="nav-item text-start">
-          <a class="nav-link" href="/">Sair</a>
+          <form id="logout-form" action="{{ route('logout.execute') }}" method="POST">
+            @csrf
+            <a class="nav-link" href="javascript: document.forms['logout-form'].submit();">Sair</a>
+          </form>
         </li>
       </ul>
     </aside>
@@ -52,42 +56,47 @@
               </button>
             </a>
           </div>
-          <form class="container needs-validation" novalidate>
+          <form action="{{ route('responsavel.editarAluno.execute', ['alunoId' => $aluno->id]) }}"
+            class="container needs-validation" method="POST" novalidate>
+            @method('PUT')
+            @csrf
             <div class="d-flex col-md-12 justify-content-evenly mt-3">
               <div class="d-inline-block form-floating col-md-5">
-                <input type="text" name="nome" class="form-control" id="floatingInput" placeholder="Fulano de tal"
-                  required>
+                <input type="text" name="nome" value="{{ $aluno->nome }}" class="form-control" id="floatingInput"
+                  placeholder="Fulano de tal" required>
                 <label for="floatingInput">Nome</label>
               </div>
               <div class="d-inline-block form-floating col-md-5">
-                <input type="text" name="matricula" class="form-control" id="floatingMatricula" placeholder="14117063"
-                  required>
+                <input type="text" name="matricula" value="{{ $aluno->matricula }}" class="form-control"
+                  id="floatingMatricula" placeholder="14117063" required>
                 <label for="floatingMatricula">Matrícula</label>
               </div>
             </div>
             <div class="d-flex col-md-12 justify-content-evenly mt-3">
               <div class="d-inline-block form-floating col-md-5">
-                <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="name@example.com"
-                  required>
+                <input type="email" name="email" value="{{ $aluno->email }}" class="form-control" id="floatingEmail"
+                  placeholder="name@example.com" required>
                 <label for="floatingEmail">Email</label>
               </div>
               <div class="d-inline-block form-floating col-md-5">
-                <input type="text" name="telefone" class="form-control" id="floatingTelefone"
-                  placeholder="(71)99999-9999" required>
+                <input type="text" name="telefone" value="{{ $aluno->telefone }}" class="form-control"
+                  id="floatingTelefone" placeholder="(71)99999-9999" required>
                 <label for="floatingTelefone">Telefone</label>
               </div>
             </div>
             <div class="d-flex col-md-12 justify-content-evenly mt-3">
               <div class="d-inline-block form-floating col-md-5">
-                <input type="text" name="turma" class="form-control" id="floatingTurma" placeholder="A" required>
+                <input type="text" name="turma" value="{{ $aluno->turma }}" class="form-control" id="floatingTurma"
+                  placeholder="A" required>
                 <label for="floatingTurma">Turma</label>
               </div>
               <div class="d-inline-block form-floating col-md-5">
-                <input type="text" name="turno" class="form-control" id="floatingTurno" placeholder="Noturno" required>
+                <input type="text" name="turno" value="{{ $aluno->turno }}" class="form-control" id="floatingTurno"
+                  placeholder="Noturno" required>
                 <label for="floatingTurno">Turno</label>
               </div>
             </div>
-            <div class="d-flex col-md-12 justify-content-evenly mt-3">
+            {{-- <div class="d-flex col-md-12 justify-content-evenly mt-3">
               <div class="d-inline-block form-floating col-md-5">
                 <input type="text" name="login" class="form-control" id="floatingLogin" placeholder="batman" required>
                 <label for="floatingLogin">Login</label>
@@ -97,7 +106,7 @@
                   required>
                 <label for="floatingPassword">Senha</label>
               </div>
-            </div>
+            </div> --}}
 
             <div class="d-flex col-md-12 justify-content-center mt-5">
               <button class="btn btn-success" type="submit">Salver alterações</button>
@@ -134,10 +143,9 @@
     </div>
   </section>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-    crossorigin="anonymous"></script>
+    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
   <script>
-    (function () {
+    (function() {
       'use strict'
 
       // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -145,8 +153,8 @@
 
       // Loop over them and prevent submission
       Array.prototype.slice.call(forms)
-        .forEach(function (form) {
-          form.addEventListener('submit', function (event) {
+        .forEach(function(form) {
+          form.addEventListener('submit', function(event) {
             if (!form.checkValidity()) {
               event.preventDefault()
               event.stopPropagation()

@@ -20,13 +20,17 @@
           <a class="nav-link" aria-current="page" href="/Responsavel">Alunos</a>
         </li>
         <li class="nav-item text-start">
-          <a class="nav-link active" aria-current="page" href="/Responsavel/alunos/produtos/bloquear">Bloquear produtos</a>
+          <a class="nav-link active" aria-current="page" href="/Responsavel/alunos/produtos/bloquear">Bloquear
+            produtos</a>
         </li>
         <li class="nav-item text-start">
           <a class="nav-link" href="/Responsavel/alunos/depositos">Extrato de depósitos</a>
         </li>
         <li class="nav-item text-start">
-          <a class="nav-link" href="/">Sair</a>
+          <form id="logout-form" action="{{ route('logout.execute') }}" method="POST">
+            @csrf
+            <a class="nav-link" href="javascript: document.forms['logout-form'].submit();">Sair</a>
+          </form>
         </li>
       </ul>
     </aside>
@@ -179,8 +183,7 @@
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-    crossorigin="anonymous"></script>
+    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 </body>
 
 </html>l

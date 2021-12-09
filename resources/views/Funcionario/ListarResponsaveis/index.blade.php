@@ -6,9 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sistema ABC</title>
-  <link rel="stylesheet" href="{{asset('scss/theme.css')}}">
-  <link rel="stylesheet" href="{{asset('css/global.css')}}">
-  <link rel="stylesheet" href="{{asset('css/Funcionario/ListarProdutos/styles.css')}}">
+  <link rel="stylesheet" href="{{ asset('scss/theme.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/global.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/Funcionario/ListarProdutos/styles.css') }}">
   <script src="https://kit.fontawesome.com/47d0300dca.js" crossorigin="anonymous"></script>
 </head>
 
@@ -27,7 +27,10 @@
           <a class="nav-link" href="/Funcionario/alunos">Alunos</a>
         </li>
         <li class="nav-item text-start">
-          <a class="nav-link" href="/">Sair</a>
+          <form id="logout-form" action="{{ route('logout.execute') }}" method="POST">
+            @csrf
+            <a class="nav-link" href="javascript: document.forms['logout-form'].submit();">Sair</a>
+          </form>
         </li>
       </ul>
     </aside>
@@ -72,33 +75,18 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>mark@hotmail.com</td>
-                  <td>(71)99122-3123</td>
-                  <td>07432093482</td>
-                  <td><a class="btn btn-primary btn-sm" href="/Funcionario/responsaveis/editar"><i
-                        class="far fa-edit"></i></a></td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>jacob@hotmail.com</td>
-                  <td>(71)99122-3123</td>
-                  <td>43244353455</td>
-                  <td><a class="btn btn-primary btn-sm" href="../EditarResponsavel/index.html"><i
-                        class="far fa-edit"></i></a></td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Larry</td>
-                  <td>larry@hotmail.com</td>
-                  <td>(72)99122-3123</td>
-                  <td>23423423423</td>
-                  <td><a class="btn btn-primary btn-sm" href="../EditarResponsavel/index.html"><i
-                        class="far fa-edit"></i></a></td>
-                </tr>
+                @foreach ($responsaveis as $responsavel)
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>{{ $responsavel->nome }}</td>
+                    <td>{{ $responsavel->email }}</td>
+                    <td>{{ $responsavel->telefone }}</td>
+                    <td>{{ $responsavel->cpf }}</td>
+                    <td><a class="btn btn-primary btn-sm"
+                        href="{{ route('funcionario.editarResponsavel.execte', ['responsavelId' => $responsavel->id]) }}"><i
+                          class="far fa-edit"></i></a></td>
+                  </tr>
+                @endforeach
               </tbody>
             </table>
           </div>
@@ -132,9 +120,52 @@
       </div>
     </div>
   </section>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-    crossorigin="anonymous"></script>
+  <div class="toast-container position-absolute" id="toastPlacement" style="position: absolute; top: 5px; right: 40%;">
+    <div id="success-toast" class="toast align-items-center text-white bg-success border-0" role="alert"
+      aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          @if (session('success'))
+            {{ session('success') }}
+          @endif
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+          aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+  <div class="toast-container position-absolute" id="toastPlacement" style="position: absolute; top: 5px; right: 40%;">
+    <div id="error-toast" class="toast align-items-center text-white bg-danger border-0" role="alert"
+      aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          @if (session('error'))
+            {{ session('error') }}
+          @endif
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+          aria-label="Close"></button>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous">
+    </script>
+    @if (session('success'))
+      <script>
+        var mySuccessAlert = document.getElementById('success-toast'); //select id of toast
+        var bsSuccessAlert = new bootstrap.Toast(mySuccessAlert); //inizialize it
+        bsSuccessAlert.show();
+      </script>
+    @endif
+    @if (session('error'))
+      <script>
+        var myAlert = document.getElementById('error-toast'); //select id of toast
+        var bsAlert = new bootstrap.Toast(myAlert); //inizialize it
+        bsAlert.show();
+      </script>
+    @endif
 </body>
 
 </html>
