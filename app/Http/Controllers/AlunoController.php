@@ -46,7 +46,7 @@ class AlunoController extends BaseController
         'login' => $body['login'],
         'senha' => $body['senha'],
         'user_id' => $user->id,
-        'escola_id' => 11,
+        'escola_id' => 1,
         'responsavel_id' => 1,
       ]);
 
@@ -88,7 +88,7 @@ class AlunoController extends BaseController
   public function consultarSaldoToAluno(Request $request)
   {
     try {
-      $aluno = Aluno::where('id', 3)
+      $aluno = Aluno::where('id', 1)
         ->get()
         ->first();
 
@@ -101,7 +101,7 @@ class AlunoController extends BaseController
   public function consultarDepositoToAluno(Request $request)
   {
     try {
-      $depositos = Deposito::where('aluno_id', 3)
+      $depositos = Deposito::where('aluno_id', 1)
         ->get();
 
       return view('alunos.extratoDepositos.index', ['depositos' => $depositos]);

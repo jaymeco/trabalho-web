@@ -38,7 +38,7 @@ class ResponsavelController extends BaseController
         'telefone' => $body['telefone'],
         'email' => $body['email'],
         'user_id' => $user->id,
-        'escola_id' => 11,
+        'escola_id' => 1,
       ]);
 
       return redirect()->route('funcionario.adicionarResponsavel')
@@ -52,7 +52,7 @@ class ResponsavelController extends BaseController
   public function getResponsaveis(Request $request)
   {
     try {
-      $responsaveis = Responsavel::where('escola_id', 11)
+      $responsaveis = Responsavel::where('escola_id', 1)
         ->get();
 
       return view('funcionario.listarResponsaveis.index', [
