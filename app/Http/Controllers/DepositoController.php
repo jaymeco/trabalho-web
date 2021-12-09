@@ -18,6 +18,7 @@ class DepositoController extends BaseController
   public function realizarDeposito(Request $request, $alunoId)
   {
     try {
+      $responsavelId = auth()->user()->responsavel->id;
       $body = $request->validate([
         'valor' => 'required',
       ]);
@@ -30,7 +31,7 @@ class DepositoController extends BaseController
         'valor' => $body['valor'],
         'data' => Carbon::now()->toDateString(),
         'aluno_id' => $alunoId,
-        'responsavel_id' => 2,
+        'responsavel_id' => $responsavelId,
       ]);
 
       $alunoB = Aluno::where('id', $alunoId)->update([
