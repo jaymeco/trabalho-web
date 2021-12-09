@@ -79,8 +79,12 @@
                             <li><a class="dropdown-item"
                                 href="{{ route('responsavel.editarAluno.execute', ['alunoId' => $aluno->id]) }}">Editar</a>
                             </li>
-                            <li><a class="dropdown-item" href="/Responsavel/alunos/historico">Ver historico de
-                                alimentação</a></li>
+                            <li><a class="dropdown-item"
+                                href="{{ route('responsavel.ver.historico', ['alunoId' => $aluno->id]) }}">
+                                Ver historico
+                                de
+                                alimentação
+                              </a></li>
                             <li><a class="dropdown-item" type="button" data-bs-toggle="modal"
                                 data-bs-target="#depositoModal-{{ $aluno->id }}">Realizar Deposito</a></li>
                             <li><a class="dropdown-item" href="#">Excluir</a></li>

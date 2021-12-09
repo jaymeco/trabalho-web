@@ -47,4 +47,19 @@ class CompraController extends BaseController
         ->with('error', 'Falha ao comprar produto!');
     }
   }
+
+  public function verHistorico(Request $request, int $alunoId)
+  {
+    try {
+      $historico = Compra::where('aluno_id', $alunoId)
+        ->with('aluno')
+        ->with('produto')
+        ->get();
+
+      return view('responsavel.verHistorico.index', ['historico' => $historico]);
+    } catch (\Throwable $th) {
+      return redirect()->route('responsavel.alunos')
+        ->with('error', 'Falha ao visualizar o historico do aluno! ' . $th->getMessage());
+    }
+  }
 }

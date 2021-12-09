@@ -103,9 +103,9 @@ Route::prefix('Responsavel')->group(function () {
     Route::post('/adicionar', [AlunoController::class, 'createAluno'])
       ->middleware(['auth', 'authorize.responsavel'])->name('responsavel.adicionar.aluno.execute');
 
-    Route::get('/historico', function () {
-      return view('responsavel.verHistorico.index');
-    });
+    Route::get('/{alunoId}/historico', [CompraController::class, 'verHistorico'])
+      ->middleware(['auth', 'authorize.responsavel'])->name('responsavel.ver.historico');
+
     Route::get('/{alunoId}/editar', [AlunoController::class, 'getAluno'])
       ->middleware(['auth', 'authorize.responsavel'])->name('responsavel.editar.aluno');
 

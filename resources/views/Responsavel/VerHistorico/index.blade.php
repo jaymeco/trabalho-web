@@ -48,7 +48,7 @@
         <div class="card-body">
           <div class="d-flex flex-row">
             <h3 class="m">
-              Mark Charles
+              {{$historico[0]->aluno->nome}}
             </h3>
           </div>
 
@@ -63,24 +63,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="border-primary">
-                  <th scope="row">1</th>
-                  <td class="text-black-50">R$ 122,00</td>
-                  <td class="text-black-50">12/12</td>
-                  <td class="text-black-50">Hot dog</td>
-                </tr>
-                <tr class="border-primary">
-                  <th scope="row">2</th>
-                  <td class="text-black-50">R$ 122,00</td>
-                  <td class="text-black-50">12/12</td>
-                  <td class="text-black-50">Pizza</td>
-                </tr>
-                <tr class="border-primary">
-                  <th scope="row">3</th>
-                  <td class="text-black-50">R$ 122,00</td>
-                  <td class="text-black-50">12/12</td>
-                  <td class="text-black-50">Suco de Maracujá</td>
-                </tr>
+                @foreach ($historico as $compra)
+                  <tr class="border-primary">
+                    <th scope="row">{{$compra->id}}</th>
+                    <td class="text-black-50">R$ {{$compra->valor}}</td>
+                    <td class="text-black-50">{{$compra->data}}</td>
+                    <td class="text-black-50">{{$compra->produto->nome}}</td>
+                  </tr>
+                @endforeach
               </tbody>
             </table>
           </div>

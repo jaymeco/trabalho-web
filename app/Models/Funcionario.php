@@ -29,7 +29,7 @@ class Funcionario extends Authenticatable
 
   public function escola()
   {
-    $this->belongsTo('escola', 'escola_id');
+    return $this->belongsTo(Escola::class, 'escola_id');
   }
 
   public function scopeWhereUser($query, $id)

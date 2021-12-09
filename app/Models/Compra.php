@@ -36,11 +36,11 @@ class Compra extends Authenticatable
 
   public function produto()
   {
-    $this->hasOne('produto', 'produto_id');
+    return $this->hasOne(Produto::class, 'id');
   }
 
   public function aluno()
   {
-    $this->belongsTo('aluno', 'aluno_id');
+    return $this->belongsTo(Aluno::class, 'aluno_id');
   }
 }
