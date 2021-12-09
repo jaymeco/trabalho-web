@@ -19,6 +19,8 @@ class AlunoController extends BaseController
   public function createAluno(Request $request)
   {
     try {
+      $responsavel = auth()->user()->responsavel;
+
       $body = $request->validate([
         'nome' => 'required',
         'turma' => 'required',
@@ -35,6 +37,7 @@ class AlunoController extends BaseController
           'rounds' => 10,
         ]),
       ]);
+
       $aluno = Aluno::create([
         'nome' => $body['nome'],
         'turma' => $body['turma'],
@@ -46,8 +49,8 @@ class AlunoController extends BaseController
         'login' => $body['login'],
         'senha' => $body['senha'],
         'user_id' => $user->id,
-        'escola_id' => 1,
-        'responsavel_id' => 1,
+        'escola_id' => $responsavel->escola_id,
+        'responsavel_id' => $responsavel->id,
       ]);
 
       return redirect()->route('responsavel.adicionar.aluno.execute')
@@ -61,7 +64,8 @@ class AlunoController extends BaseController
   public function getAlunos(Request $request)
   {
     try {
-      $alunos = Aluno::where('responsavel_id', 1)
+      $responsavelId = auth()->user()->responsavel->id;
+      $alunos = Aluno::where('responsavel_id', $responsavelId)
         ->get();
 
       return view('responsavel.listagemAlunos.index', ['alunos' => $alunos]);
@@ -88,8 +92,8 @@ class AlunoController extends BaseController
   public function consultarSaldoToAluno(Request $request)
   {
     try {
-      $aluno = Aluno::where('id', 1)
-        ->get()
+      $userId = auth()->id();
+      $aluno = Aluno::where('user_id', $userId)
         ->first();
 
       return view('alunos.saldo.index', ['aluno' => $aluno]);
@@ -101,7 +105,8 @@ class AlunoController extends BaseController
   public function consultarDepositoToAluno(Request $request)
   {
     try {
-      $depositos = Deposito::where('aluno_id', 1)
+      $alunoId = auth()->user()->aluno->id;
+      $depositos = Deposito::where('aluno_id', $alunoId)
         ->get();
 
       return view('alunos.extratoDepositos.index', ['depositos' => $depositos]);
@@ -110,10 +115,38 @@ class AlunoController extends BaseController
     }
   }
 
+  public function consultarSaldoToFuncionario(Request $request)
+  {
+    try {
+      $body = $request->validate([
+        'alunoId' => 'required',
+      ]);
+      $aluno = Aluno::where('id', $body['alunoId'])
+        ->get()->first();
+      $alunos = Aluno::all();
+      return view('funcionario.alunos.index', ['aluno' => $aluno, 'alunos' => $alunos]);
+    } catch (\Throwable $th) {
+      //throw $th;
+    }
+  }
+
+  public function getAlunoSaldoToFuncionario(Request $request)
+  {
+    try {
+      $aluno = Aluno::all();
+
+      return view('funcionario.alunos.index', ['aluno' => [], 'alunos' => $aluno]);
+    } catch (\Throwable $th) {
+      return redirect()->route('funcionario.alunos.index')
+        ->with('error', 'Falha ao listar alunos!');
+    }
+  }
+
   public function getAlunoDeposito(Request $request)
   {
     try {
-      $aluno = Aluno::where('responsavel_id', 1)
+      $responsavelId = auth()->user()->responsavel->id;
+      $aluno = Aluno::where('responsavel_id', $responsavelId)
         ->get();
 
       return view('responsavel.extratoDepositos.index', ['alunos' => $aluno, 'depositos' => []]);

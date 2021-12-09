@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aluno;
+use App\Models\Funcionario;
+use App\Models\Responsavel;
 use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -27,10 +30,24 @@ class AuthController extends BaseController
     ];
 
     if (Auth::guard('web')->attempt($credentials)) {
-      $user = User::where('username', $body['login'])->get()->first();
+      $user = auth()->user();
       if ($user->username == 'tecnico.main') {
         return redirect()->route('tecnico.index');
       }
+
+      if (Funcionario::where('user_id', $user->id)->exists()) {
+        return redirect()->route('funcionario.index');
+      }
+
+      if (Aluno::where('user_id', $user->id)->exists()) {
+        return redirect()->route('aluno.saldo.index');
+      }
+
+      if (Responsavel::where('user_id', $user->id)->exists()) {
+        return redirect()->route('responsavel.alunos');
+      }
+
+      return redirect()->route('tecnico.index');
     }
 
     return redirect()->route('login.index')->with('error', 'Usuário ou senha estão invalidos.');

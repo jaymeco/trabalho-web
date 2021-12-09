@@ -18,6 +18,7 @@ class ResponsavelController extends BaseController
   public function createResponsavel(Request $request)
   {
     try {
+      $escolaId = auth()->user()->escola->id;
       $body = $request->validate([
         'nome' => 'required',
         'cpf' => 'required',
@@ -38,7 +39,7 @@ class ResponsavelController extends BaseController
         'telefone' => $body['telefone'],
         'email' => $body['email'],
         'user_id' => $user->id,
-        'escola_id' => 1,
+        'escola_id' => $escolaId,
       ]);
 
       return redirect()->route('funcionario.adicionarResponsavel')
@@ -52,7 +53,8 @@ class ResponsavelController extends BaseController
   public function getResponsaveis(Request $request)
   {
     try {
-      $responsaveis = Responsavel::where('escola_id', 1)
+      $escolaId = auth()->user()->escola->id;
+      $responsaveis = Responsavel::where('escola_id', $escolaId)
         ->get();
 
       return view('funcionario.listarResponsaveis.index', [

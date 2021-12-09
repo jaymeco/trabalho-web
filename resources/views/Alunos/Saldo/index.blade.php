@@ -48,7 +48,11 @@
           <div class="card border-success color-card">
             <div class="card-body">
               <blockquote class="blockquote mb-0 d-flex justify-content-center">
-                <p class="color-saldo">Saldo: R$ {{ $aluno->saldo }}</p>
+                @if(isset($aluno))
+                  <p class="color-saldo">Saldo: R$ {{$aluno->saldo}}</p>
+                @else
+                  <p class="color-saldo">Sem saldo para exibir</p>
+                @endif
               </blockquote>
             </div>
           </div>

@@ -45,25 +45,32 @@
       </div>
       <div class="card mt-5">
         <div class="card-body">
-          <div class="row justify-content-between">
-            <div class="col-md-10 ">
-              <select class="form-select" aria-label="Default select example">
-                <option selected disabled>Selecione um aluno</option>
-                <option value="1">Carlos</option>
-                <option value="2">Julia</option>
-                <option value="3">Charles</option>
-              </select>
+          <form action="{{route('funcionario.consutar.deposito')}}" method="POST">
+            @csrf
+            <div class="row justify-content-between">
+              <div class="col-md-10 ">
+                <select name="alunoId" class="form-select" aria-label="Default select example">
+                  <option selected disabled>Selecione um aluno</option>
+                    @foreach ($alunos as $aluno)
+                      <option value="{{ $aluno->id }}">{{ $aluno->nome }}</option>
+                    @endforeach
+                </select>
+              </div>
+              <div class="col-md-2 d-flex flex-row align-items-center justify-content-end">
+                <button type="submit" class="btn btn-primary">Consultar</button>
+              </div>
             </div>
-            <div class="col-md-2 d-flex flex-row align-items-center justify-content-end">
-              <button type="submit" class="btn btn-primary">Consultar</button>
-            </div>
-          </div>
+          </form>
 
           <div class="mt-5">
             <div class="card border-success color-card">
               <div class="card-body">
                 <blockquote class="blockquote mb-0 d-flex justify-content-center">
-                  <p class="color-saldo">Saldo: R$ 156,80</p>
+                  @if(isset($aluno))
+                    <p class="color-saldo">Saldo: R$ {{$aluno->saldo}}</p>
+                  @else
+                    <p class="color-saldo">Sem saldo para exibir</p>
+                  @endif
                 </blockquote>
               </div>
             </div>

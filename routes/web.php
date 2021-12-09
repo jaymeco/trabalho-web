@@ -27,6 +27,7 @@ Route::get('/', function () {
   // dd(Hash::check('password', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'));
   return view('login.index');
 })->name('login.index');
+
 Route::post('/', [AuthController::class, 'login'])->name('login.execute');
 
 Route::post('/logout', [AuthController::class, 'logout'])
@@ -77,9 +78,13 @@ Route::prefix('Funcionario')->group(function () {
       ->middleware('auth')->name('funcionario.editarResponsavel.execte');
   });
 
-  Route::get('/alunos', function () {
-    return view('funcionario.alunos.index');
-  });
+  Route::get('/alunos', [AlunoController::class, 'getAlunoSaldoToFuncionario'])
+    ->middleware('auth')->name('funcionario.alunos.index');
+
+  Route::get('/alunos/consultado', [AlunoController::class, 'consultarSaldoToFuncionario'])
+    ->name('funcionario.consutar.deposito');
+  Route::post('/alunos/consultado', [AlunoController::class, 'consultarSaldoToFuncionario'])
+    ->name('funcionario.consutar.deposito');
 });
 
 Route::prefix('Responsavel')->group(function () {

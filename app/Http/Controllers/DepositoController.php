@@ -30,7 +30,7 @@ class DepositoController extends BaseController
         'valor' => $body['valor'],
         'data' => Carbon::now()->toDateString(),
         'aluno_id' => $alunoId,
-        'responsavel_id' => 1,
+        'responsavel_id' => 2,
       ]);
 
       $alunoB = Aluno::where('id', $alunoId)->update([
@@ -51,8 +51,8 @@ class DepositoController extends BaseController
       $body = $request->validate([
         'alunoId' => 'required',
       ]);
-
-      $alunos = Aluno::where('responsavel_id', 1)
+      $responsavelId = auth()->user()->responsavel->id;
+      $alunos = Aluno::where('responsavel_id', $responsavelId)
         ->get();
 
       $depositos = Deposito::where('aluno_id', $body['alunoId'])->get();
