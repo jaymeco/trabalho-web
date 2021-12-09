@@ -18,7 +18,7 @@ class ResponsavelController extends BaseController
   public function createResponsavel(Request $request)
   {
     try {
-      $escolaId = auth()->user()->escola->id;
+      $escolaId = auth()->user()->funcionario->escola_id;
       $body = $request->validate([
         'nome' => 'required',
         'cpf' => 'required',
@@ -53,7 +53,7 @@ class ResponsavelController extends BaseController
   public function getResponsaveis(Request $request)
   {
     try {
-      $escolaId = auth()->user()->escola->id;
+      $escolaId = auth()->user()->funcionario->escola_id;
       $responsaveis = Responsavel::where('escola_id', $escolaId)
         ->get();
 

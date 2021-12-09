@@ -66,7 +66,7 @@
                 <tbody>
                   @foreach ($alunos as $aluno)
                     <tr>
-                      <th scope="row">1</th>
+                      <th scope="row">{{ $aluno->id }}</th>
                       <td>{{ $aluno->nome }}</td>
                       <td>{{ $aluno->matricula }}</td>
                       <td>
