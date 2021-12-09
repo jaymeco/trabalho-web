@@ -128,9 +128,8 @@ Route::prefix('Aluno')->group(function () {
   Route::get('/', [AlunoController::class, 'consultarSaldoToAluno'])
     ->middleware(['auth', 'authorize.aluno'])->name('aluno.saldo.index');
 
-  Route::get('/produtos/comprar', function () {
-    return view('alunos.comprarProdutos.index');
-  })->middleware(['auth', 'authorize.aluno']);
+  Route::get('/produtos/comprar', [ProdutoController::class, 'getProdutosOnlyActives'])
+    ->middleware(['auth', 'authorize.aluno'])->name('aluno.comprar.produtos');
 
   Route::get('/depositos', [AlunoController::class, 'consultarDepositoToAluno'])
     ->middleware(['auth', 'authorize.aluno'])->name('aluno.depositos.index');

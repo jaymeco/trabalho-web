@@ -129,4 +129,19 @@ class ProdutoController extends BaseController
         ->with('error', 'Falha ao editar o produto!');
     }
   }
+
+  public function getProdutosOnlyActives(Request $request)
+  {
+    try {
+      $produtos = Produto::where('is_block_aluno', false)
+        ->get();
+
+      return view('alunos.comprarProdutos.index', [
+        'produtos' => $produtos,
+      ]);
+    } catch (\Throwable $th) {
+      return redirect()->route('aluno.saldo.index')
+        ->with('error', 'Falha ao carregar os produtos!');
+    }
+  }
 }

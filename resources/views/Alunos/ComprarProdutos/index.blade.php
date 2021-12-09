@@ -51,127 +51,138 @@
             <div class="d-flex flex-row align-items-center justify-content-between">
               <h5 class="fw-bold">Comidas</h5>
             </div>
-            <div class="col-sm">
-              <div class="col-sm">
-                <a type="button" data-bs-toggle="modal" data-bs-target="#modalcomprarproduto">
-                  <div class="mt-1 d-flex flex-wrap">
-                    <div class="col-md-3">
-                      <div class="card mt-3" style="width: 14.5rem;">
-                        <img src="../../../assets/images/coxinha.jpg" class="card-img-top" alt="produto - carro">
-                        <div class="card-body pb-0 px-3">
-                          <div class="row align-items-center justify-content-between ">
-                            <div class="col-md-7 p-0">
-                              <p class="mb-0 fw-bold">
-                                #000000
-                              </p>
+            @foreach ($produtos as $produto)
+              @if ($produto->tipo == 'comida')
+
+                <div class="col-sm">
+                  <div class="col-sm">
+                    <a type="button" data-bs-toggle="modal" data-bs-target="#modalcomprarproduto-{{ $produto->id }}">
+                      <div class="mt-1 d-flex flex-wrap">
+                        <div class="col-md-3">
+                          <div class="card mt-3" style="width: 14.5rem;">
+                            <img src="{{ $produto->foto }}" class="card-img-top" alt="produto - carro">
+                            <div class="card-body pb-0 px-3">
+                              <div class="row align-items-center justify-content-between ">
+                                <div class="col-md-7 p-0">
+                                  <p class="mb-0 fw-bold">
+                                    #{{ $produto->codigo }}
+                                  </p>
+                                </div>
+                              </div>
+                              <div class=" row align-items-center justify-content-between mt-2">
+                                <div class="col-md-8 p-0">
+                                  <p class="fw-bold fs-6 mb-1">
+                                    {{ $produto->nome }}
+                                  </p>
+                                </div>
+                                <div class="col-md-4 p-0 text-end">
+                                  <p class="text-primary mb-1">R$ {{ $produto->preco }}</p>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                          <div class=" row align-items-center justify-content-between mt-2">
-                            <div class="col-md-8 p-0">
-                              <p class="fw-bold fs-6 mb-1">
-                                Coxinha
-                              </p>
-                            </div>
-                            <div class="col-md-4 p-0 text-end">
-                              <p class="text-primary mb-1">R$ 10,00</p>
-                            </div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="modal fade" id="modalcomprarproduto-{{ $produto->id }}" tabindex="-1"
+                  aria-labelledby="modalcomprarprodutoLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title fw-bold" id="modalcomprarprodutoLabel">{{ $produto->nome }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                          aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row">
+                          <div class="col-sm">
+                            <img src="{{ $produto->foto }}" class="card-img-top" alt="produto - carro">
+                          </div>
+                          <div class="col-sm">
+                            <p>Ingredientes:
+                              <span class="font-p">
+                                {{ $produto->ingredientes }}
+                              </span>
+                            </p>
+                            <p class="text-primary mb-1">R$ {{ $produto->preco }}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Comprar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              @endif
+            @endforeach
+          </div>
+          <div class="d-flex flex-row align-items-center justify-content-between m-t-50">
+            <h5 class="fw-bold">Bebidas</h5>
+          </div>
+          <div class="mt-1 d-flex flex-wrap">
+            @foreach ($produtos as $produto)
+              @if ($produto->tipo == 'bebida')
+                <a type="button" data-bs-toggle="modal" data-bs-target="#modalcomprarproduto-{{ $produto->id }}">
+                  <div class="col-md-3">
+                    <div class="card mt-3" style="width: 14.5rem;">
+                      <img src="{{ $produto->foto }}" class="card-img-top" alt="produto - carro">
+                      <div class="card-body pb-0 px-3">
+                        <div class="row align-items-center justify-content-between ">
+                          <div class="col-md-7 p-0">
+                            <p class="mb-0 fw-bold">
+                              #{{ $produto->codigo }}
+                            </p>
+                          </div>
+                        </div>
+                        <div class=" row align-items-center justify-content-between mt-2">
+                          <div class="col-md-8 p-0">
+                            <p class="fw-bold fs-6 mb-1">
+                              {{ $produto->nome }}
+                            </p>
+                          </div>
+                          <div class="col-md-4 p-0 text-end">
+                            <p class="text-primary mb-1">R$ {{ $produto->preco }}</p>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </a>
-              </div>
-            </div>
-            <div class="col-sm">
-              <div class="col-sm">
-                <div class="mt-1 d-flex flex-wrap">
-                  <div class="col-md-3">
-                    <div class="card mt-3" style="width: 14.5rem;">
-                      <img src="../../../assets/images/kibe.jpg" class="card-img-top" alt="produto - carro">
-                      <div class="card-body pb-0 px-3">
-                        <div class="row align-items-center justify-content-between ">
-                          <div class="col-md-7 p-0">
-                            <p class="mb-0 fw-bold">
-                              #000000
+                <div class="modal fade" id="modalcomprarproduto-{{ $produto->id }}" tabindex="-1"
+                  aria-labelledby="modalcomprarprodutoLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title fw-bold" id="modalcomprarprodutoLabel">{{ $produto->nome }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                          aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row">
+                          <div class="col-sm">
+                            <img src="{{ $produto->foto }}" class="card-img-top" alt="produto - carro">
+                          </div>
+                          <div class="col-sm">
+                            <p>Fornecedor:
+                              <span class="font-p">
+                                {{ $produto->fornecedor }}
+                              </span>
                             </p>
+                            <p class="text-primary mb-1">R$ {{ $produto->preco }}</p>
                           </div>
                         </div>
-                        <div class=" row align-items-center justify-content-between mt-2">
-                          <div class="col-md-8 p-0">
-                            <p class="fw-bold fs-6 mb-1">
-                              Kibe
-                            </p>
-                          </div>
-                          <div class="col-md-4 p-0 text-end">
-                            <p class="text-primary mb-1">R$ 10,00</p>
-                          </div>
-                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Comprar</button>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-sm">
-              <div class="col-sm">
-                <div class="mt-1 d-flex flex-wrap">
-                  <div class="col-md-3">
-                    <div class="card mt-3" style="width: 14.5rem;">
-                      <img src="../../../assets/images/pastel.jpg" class="card-img-top" alt="produto - carro">
-                      <div class="card-body pb-0 px-3">
-                        <div class="row align-items-center justify-content-between ">
-                          <div class="col-md-7 p-0">
-                            <p class="mb-0 fw-bold">
-                              #000000
-                            </p>
-                          </div>
-                        </div>
-                        <div class=" row align-items-center justify-content-between mt-2">
-                          <div class="col-md-8 p-0">
-                            <p class="fw-bold fs-6 mb-1">
-                              Pastel de frango
-                            </p>
-                          </div>
-                          <div class="col-md-4 p-0 text-end">
-                            <p class="text-primary mb-1">R$ 10,00</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="d-flex flex-row align-items-center justify-content-between m-t-50">
-            <h5 class="fw-bold">Bebidas</h5>
-          </div>
-          <div class="mt-1 d-flex flex-wrap">
-            <div class="col-md-3">
-              <div class="card mt-3" style="width: 14.5rem;">
-                <img src="../../../assets/images/suco.jpg" class="card-img-top" alt="produto - carro">
-                <div class="card-body pb-0 px-3">
-                  <div class="row align-items-center justify-content-between ">
-                    <div class="col-md-7 p-0">
-                      <p class="mb-0 fw-bold">
-                        #000000
-                      </p>
-                    </div>
-                  </div>
-                  <div class=" row align-items-center justify-content-between mt-2">
-                    <div class="col-md-8 p-0">
-                      <p class="fw-bold fs-6 mb-1">
-                        Suco de Laranja
-                      </p>
-                    </div>
-                    <div class="col-md-4 p-0 text-end">
-                      <p class="text-primary mb-1">R$ 6,00</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+              @endif
+            @endforeach
           </div>
         </div>
     </main>
@@ -250,36 +261,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="modalcomprarproduto" tabindex="-1" aria-labelledby="modalcomprarprodutoLabel"
-      aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title fw-bold" id="modalcomprarprodutoLabel">Coxinha</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-sm">
-                <img src="../../../assets/images/coxinha.jpg" class="card-img-top" alt="produto - carro">
-              </div>
-              <div class="col-sm">
-                <p>Ingredientes:
-                  <span class="font-p">
-                    Água, margarina, farinha de trigo, leite, farinha de rosca, óleo, cebola, alho, frango e molho de
-                    tomate.
-                  </span>
-                </p>
-                <p class="text-primary mb-1">R$ 10,00</p>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Comprar</button>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
