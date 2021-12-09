@@ -34,4 +34,9 @@ class Responsavel extends Authenticatable
   protected $table = 'responsavel';
   protected $primaryKey = 'id';
   public $incrementing = true;
+
+  public function scopeWhereUser($query, $id)
+  {
+    return $query->where('user_id', $id);
+  }
 }

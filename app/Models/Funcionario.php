@@ -31,4 +31,9 @@ class Funcionario extends Authenticatable
   {
     $this->belongsTo('escola', 'escola_id');
   }
+
+  public function scopeWhereUser($query, $id)
+  {
+    return $query->where('user_id', $id);
+  }
 }

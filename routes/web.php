@@ -35,101 +35,103 @@ Route::post('/logout', [AuthController::class, 'logout'])
 
 Route::get('/Tecnico/escola/cadastrar', function () {
   return view('cadastrarEscola.index');
-})->middleware('auth')->name('tecnico.index');
+})->middleware(['auth', 'authorize.tecnico'])->name('tecnico.index');
 
 Route::post('/Tecnico/escola/cadastrar', [TecnicoController::class, 'createEscola'])
-  ->middleware('auth')->name('tecnico.cadastro');
+  ->middleware(['auth', 'authorize.tecnico'])->name('tecnico.cadastro');
 
 Route::prefix('Funcionario')->group(function () {
   Route::get('/', [ProdutoController::class, 'getProdutos'])
-    ->middleware('auth')->name('funcionario.index');
+    ->middleware(['auth', 'authorize.funcionario'])->name('funcionario.index');
 
   Route::get('/produtos/adicionar', function () {
     return view('funcionario.adicionarProduto.index')->with('initialFlag', 'comida');
-  })->middleware('auth')->name('funcionario.adicionar.produto');
+  })->middleware(['auth', 'authorize.funcionario'])->name('funcionario.adicionar.produto');
 
   Route::post('/produtos/{produtoId}/desbloquear', [ProdutoController::class, 'desbloquearProduto'])
-    ->middleware('auth')->name('funcionario.desbloquear.produto');
+    ->middleware(['auth', 'authorize.funcionario'])->name('funcionario.desbloquear.produto');
 
   Route::post('/produtos/{produtoId}/bloquear', [ProdutoController::class, 'bloquearProduto'])
-    ->middleware('auth')->name('funcionario.bloquear.produto');
+    ->middleware(['auth', 'authorize.funcionario'])->name('funcionario.bloquear.produto');
 
   Route::post('/produtos/adicionar', [ProdutoController::class, 'createProduto'])
-    ->middleware('auth')->name('funcionario.adicionar.produto.execute');
+    ->middleware(['auth', 'authorize.funcionario'])->name('funcionario.adicionar.produto.execute');
 
   Route::put('/produtos/{produtoId}/editar', [ProdutoController::class, 'upadateProduto'])
-    ->middleware('auth')->name('funcionario.editar.produto');
+    ->middleware(['auth', 'authorize.funcionario'])->name('funcionario.editar.produto');
 
   Route::prefix('responsaveis')->group(function () {
     Route::get('/', [ResponsavelController::class, 'getResponsaveis'])
-      ->middleware('auth')->name('funcionario.responsavel.index');
+      ->middleware(['auth', 'authorize.funcionario'])->name('funcionario.responsavel.index');
 
     Route::get('/adicionar', function () {
       return view('funcionario.adicionarResponsavel.index');
-    })->middleware('auth')->name('funcionario.adicionarResponsavel');
+    })->middleware(['auth', 'authorize.funcionario'])->name('funcionario.adicionarResponsavel');
 
     Route::post('/adicionar', [ResponsavelController::class, 'createResponsavel'])
-      ->middleware('auth')->name('funcionario.adicionarResponsavel.execte');
+      ->middleware(['auth', 'authorize.funcionario'])->name('funcionario.adicionarResponsavel.execte');
 
     Route::get('/{responsavelId}/editar', [ResponsavelController::class, 'getResponsavel'])
-      ->middleware('auth')->name('funcionario.editarResponsavel');
+      ->middleware(['auth', 'authorize.funcionario'])->name('funcionario.editarResponsavel');
 
     Route::put('/{responsavelId}/editar', [ResponsavelController::class, 'updateResponsavel'])
-      ->middleware('auth')->name('funcionario.editarResponsavel.execte');
+      ->middleware(['auth', 'authorize.funcionario'])->name('funcionario.editarResponsavel.execte');
   });
 
   Route::get('/alunos', [AlunoController::class, 'getAlunoSaldoToFuncionario'])
-    ->middleware('auth')->name('funcionario.alunos.index');
+    ->middleware(['auth', 'authorize.funcionario'])->name('funcionario.alunos.index');
 
   Route::get('/alunos/consultado', [AlunoController::class, 'consultarSaldoToFuncionario'])
-    ->name('funcionario.consutar.deposito');
+    ->middleware(['auth', 'authorize.funcionario'])->name('funcionario.consutar.deposito');
   Route::post('/alunos/consultado', [AlunoController::class, 'consultarSaldoToFuncionario'])
-    ->name('funcionario.consutar.deposito');
+    ->middleware(['auth', 'authorize.funcionario'])->name('funcionario.consutar.deposito');
 });
 
 Route::prefix('Responsavel')->group(function () {
   Route::get('/', [AlunoController::class, 'getAlunos'])
-    ->middleware('auth')->name('responsavel.alunos');
+    ->middleware(['auth', 'authorize.responsavel'])->name('responsavel.alunos');
 
   Route::prefix('alunos')->group(function () {
     Route::get('/produtos/bloquear', function () {
       return view('responsavel.bloquearProdutos.index');
-    })->middleware('auth');
+    })->middleware(['auth', 'authorize.responsavel']);
 
     Route::get('/adicionar', function () {
       return view('responsavel.adicionarAluno.index');
-    })->middleware('auth');
+    })->middleware(['auth', 'authorize.responsavel']);
     Route::post('/adicionar', [AlunoController::class, 'createAluno'])
-      ->middleware('auth')->name('responsavel.adicionar.aluno.execute');
+      ->middleware(['auth', 'authorize.responsavel'])->name('responsavel.adicionar.aluno.execute');
 
     Route::get('/historico', function () {
       return view('responsavel.verHistorico.index');
     });
     Route::get('/{alunoId}/editar', [AlunoController::class, 'getAluno'])
-      ->middleware('auth')->name('responsavel.editar.aluno');
+      ->middleware(['auth', 'authorize.responsavel'])->name('responsavel.editar.aluno');
 
     Route::put('/{alunoId}/editar', [AlunoController::class, 'updateAluno'])
-      ->middleware('auth')->name('responsavel.editarAluno.execute');
+      ->middleware(['auth', 'authorize.responsavel'])->name('responsavel.editarAluno.execute');
 
     Route::post('/{alunoId}/depositar', [DepositoController::class, 'realizarDeposito'])
-      ->middleware('auth')->name('responsavel.depositarAluno.execute');
+      ->middleware(['auth', 'authorize.responsavel'])->name('responsavel.depositarAluno.execute');
 
     Route::get('/depositos', [AlunoController::class, 'getAlunoDeposito'])
-      ->middleware('auth')->name('reponsavel.depostos.aluno');
+      ->middleware(['auth', 'authorize.responsavel'])->name('reponsavel.depostos.aluno');
 
     Route::get('/depositos/consultado', [DepositoController::class, 'getDepositosByAluno'])
-      ->middleware('auth')->name('responsavel.consultar.deposito');
+      ->middleware(['auth', 'authorize.responsavel'])->name('responsavel.consultar.deposito');
     Route::post('/depositos/consultado', [DepositoController::class, 'getDepositosByAluno'])
-      ->middleware('auth')->name('responsavel.consultar.deposito');
+      ->middleware(['auth', 'authorize.responsavel'])->name('responsavel.consultar.deposito');
   });
 });
 
 Route::prefix('Aluno')->group(function () {
   Route::get('/', [AlunoController::class, 'consultarSaldoToAluno'])
-    ->middleware('auth')->name('aluno.saldo.index');
+    ->middleware(['auth', 'authorize.aluno'])->name('aluno.saldo.index');
+
   Route::get('/produtos/comprar', function () {
     return view('alunos.comprarProdutos.index');
-  });
+  })->middleware(['auth', 'authorize.aluno']);
+
   Route::get('/depositos', [AlunoController::class, 'consultarDepositoToAluno'])
-    ->middleware('auth')->name('aluno.depositos.index');
+    ->middleware(['auth', 'authorize.aluno'])->name('aluno.depositos.index');
 });
