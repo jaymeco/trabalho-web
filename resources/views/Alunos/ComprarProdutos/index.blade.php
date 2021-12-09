@@ -111,7 +111,11 @@
                         </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Comprar</button>
+                        <form method="POST" action="{{ route('aluno.comprar.produtos.execute', ['produtoId' => $produto->id]) }}">
+                          @csrf
+                          <input type="hidden" name="valor" value="{{ $produto->preco }}">
+                          <button type="submit" class="btn btn-primary">Comprar</button>
+                        </form>
                       </div>
                     </div>
                   </div>
@@ -176,7 +180,11 @@
                         </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Comprar</button>
+                        <form action="{{ route('aluno.comprar.produtos.execute', ['produtoId' => $produto->id]) }}">
+                          @csrf
+                          <input type="hidden" name="valor" value="{{ $produto->preco }}">
+                          <button type="submit" class="btn btn-primary">Comprar</button>
+                        </form>
                       </div>
                     </div>
                   </div>
@@ -259,13 +267,55 @@
         </div>
       </div>
     </div>
-
-    <!-- Modal -->
-
   </section>
 
+  <div class="toast-container position-absolute" id="toastPlacement" style="position: absolute; top: 5px; right: 40%;">
+    <div id="success-toast" class="toast align-items-center text-white bg-success border-0" role="alert"
+      aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          @if (session('success'))
+            {{ session('success') }}
+          @endif
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+          aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+  <div class="toast-container position-absolute" id="toastPlacement" style="position: absolute; top: 5px; right: 40%;">
+    <div id="error-toast" class="toast align-items-center text-white bg-danger border-0" role="alert"
+      aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          @if (session('error'))
+            {{ session('error') }}
+          @endif
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+          aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+  @if (session('success'))
+    <script>
+      var mySuccessAlert = document.getElementById('success-toast'); //select id of toast
+      var bsSuccessAlert = new bootstrap.Toast(mySuccessAlert); //inizialize it
+      bsSuccessAlert.show();
+    </script>
+  @endif
+  @if (session('error'))
+    <script>
+      var myAlert = document.getElementById('error-toast'); //select id of toast
+      var bsAlert = new bootstrap.Toast(myAlert); //inizialize it
+      bsAlert.show();
+    </script>
+  @endif
 </body>
 
 </html>

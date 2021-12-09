@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CompraController;
 use App\Http\Controllers\DepositoController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\ResponsavelController;
@@ -130,6 +131,9 @@ Route::prefix('Aluno')->group(function () {
 
   Route::get('/produtos/comprar', [ProdutoController::class, 'getProdutosOnlyActives'])
     ->middleware(['auth', 'authorize.aluno'])->name('aluno.comprar.produtos');
+
+  Route::post('/produtos/{produtoId}/comprar', [CompraController::class, 'realizarCompra'])
+    ->middleware(['auth', 'authorize.aluno'])->name('aluno.comprar.produtos.execute');
 
   Route::get('/depositos', [AlunoController::class, 'consultarDepositoToAluno'])
     ->middleware(['auth', 'authorize.aluno'])->name('aluno.depositos.index');
