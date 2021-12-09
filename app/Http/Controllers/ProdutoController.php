@@ -133,7 +133,10 @@ class ProdutoController extends BaseController
   public function getProdutosOnlyActives(Request $request)
   {
     try {
-      $produtos = Produto::where('is_block_aluno', false)
+      $produtos = Produto::where([
+        'is_block_aluno' => false,
+        'is_block_produto' => false
+      ])
         ->get();
 
       return view('alunos.comprarProdutos.index', [
