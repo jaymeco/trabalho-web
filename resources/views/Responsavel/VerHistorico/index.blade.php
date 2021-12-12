@@ -45,36 +45,45 @@
         </h3>
       </div>
       <div class="card mt-5">
-        <div class="card-body">
-          <div class="d-flex flex-row">
+        @if (!count($historico))
+          <div class="d-flex justify-content-center mt-5">
             <h3 class="m">
-              {{$historico[0]->aluno->nome}}
+              Esse aluno não possui compras ainda
             </h3>
           </div>
+        @else
 
-          <div class="mt-5">
-            <table class="table">
-              <thead class="bg-primary text-white">
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Valor da compra</th>
-                  <th scope="col">Data da compra</th>
-                  <th scope="col">Produto comprado</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach ($historico as $compra)
-                  <tr class="border-primary">
-                    <th scope="row">{{$compra->id}}</th>
-                    <td class="text-black-50">R$ {{$compra->valor}}</td>
-                    <td class="text-black-50">{{$compra->data}}</td>
-                    <td class="text-black-50">{{$compra->produto->nome}}</td>
+          <div class="card-body">
+            <div class="d-flex flex-row">
+              <h3 class="m">
+                {{ $historico[0]['aluno']['nome'] }}
+              </h3>
+            </div>
+
+            <div class="mt-5">
+              <table class="table">
+                <thead class="bg-primary text-white">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Valor da compra</th>
+                    <th scope="col">Data da compra</th>
+                    <th scope="col">Produto comprado</th>
                   </tr>
-                @endforeach
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  @foreach ($historico as $compra)
+                    <tr class="border-primary">
+                      <th scope="row">{{ $compra['id'] }}</th>
+                      <td class="text-black-50">R$ {{ $compra['valor'] }}</td>
+                      <td class="text-black-50">{{ $compra['data'] }}</td>
+                      <td class="text-black-50">{{ $compra['produto']['nome'] }}</td>
+                    </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+        @endif
     </main>
 
     <div class="offcanvas offcanvas-start bg-primary" tabindex="-1" id="offcanvasExample"

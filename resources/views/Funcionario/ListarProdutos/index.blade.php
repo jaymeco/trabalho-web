@@ -133,7 +133,7 @@
                         <div class="row">
                           <div class="col-sm">
                             <div class="col-sm">
-                              <img src="../../assets/images/sanduiche.jfif" class="card-img-top" alt="Coxinha"
+                              <img src="{{$produto->foto}}" class="card-img-top" alt="Coxinha"
                                 style="height: 15rem; height: 15rem;">
                             </div>
                             <form id="edit-{{ $produto->id }}" method="POST"

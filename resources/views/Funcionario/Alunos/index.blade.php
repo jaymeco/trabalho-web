@@ -45,15 +45,15 @@
       </div>
       <div class="card mt-5">
         <div class="card-body">
-          <form action="{{route('funcionario.consutar.deposito')}}" method="POST">
+          <form action="{{ route('funcionario.consutar.deposito') }}" method="POST">
             @csrf
             <div class="row justify-content-between">
               <div class="col-md-10 ">
                 <select name="alunoId" class="form-select" aria-label="Default select example">
                   <option selected disabled>Selecione um aluno</option>
-                    @foreach ($alunos as $aluno)
-                      <option value="{{ $aluno->id }}">{{ $aluno->nome }}</option>
-                    @endforeach
+                  @foreach ($alunos as $value)
+                    <option value="{{ $value->id }}">{{ $value->nome }}</option>
+                  @endforeach
                 </select>
               </div>
               <div class="col-md-2 d-flex flex-row align-items-center justify-content-end">
@@ -66,8 +66,8 @@
             <div class="card border-success color-card">
               <div class="card-body">
                 <blockquote class="blockquote mb-0 d-flex justify-content-center">
-                  @if(isset($aluno))
-                    <p class="color-saldo">Saldo: R$ {{$aluno->saldo}}</p>
+                  @if (isset($aluno))
+                    <p class="color-saldo">Saldo atual do aluno {{ $aluno->nome }}: R$ {{ $aluno->saldo }}</p>
                   @else
                     <p class="color-saldo">Sem saldo para exibir</p>
                   @endif

@@ -180,7 +180,7 @@
                         </div>
                       </div>
                       <div class="modal-footer">
-                        <form action="{{ route('aluno.comprar.produtos.execute', ['produtoId' => $produto->id]) }}">
+                        <form method="POST" action="{{ route('aluno.comprar.produtos.execute', ['produtoId' => $produto->id]) }}">
                           @csrf
                           <input type="hidden" name="valor" value="{{ $produto->preco }}">
                           <button type="submit" class="btn btn-primary">Comprar</button>

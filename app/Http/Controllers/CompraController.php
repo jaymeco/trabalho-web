@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Aluno;
 use App\Models\Compra;
+use App\Models\Produto;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -53,8 +54,13 @@ class CompraController extends BaseController
     try {
       $historico = Compra::where('aluno_id', $alunoId)
         ->with('aluno')
-        ->with('produto')
-        ->get();
+        ->get()->map(function ($compra) {
+          $produto = Produto::where('id', $compra->produto_id)->first();
+          $collection = collect($compra);
+          return $collection->merge([
+            'produto' => $produto,
+          ]);
+        });
 
       return view('responsavel.verHistorico.index', ['historico' => $historico]);
     } catch (\Throwable $th) {

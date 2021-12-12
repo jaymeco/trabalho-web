@@ -123,7 +123,8 @@ class AlunoController extends BaseController
       ]);
       $aluno = Aluno::where('id', $body['alunoId'])
         ->get()->first();
-      $alunos = Aluno::all();
+      $escolaId = auth()->user()->funcionario->escola_id;
+      $alunos = Aluno::where('escola_id', $escolaId)->get();
       return view('funcionario.alunos.index', ['aluno' => $aluno, 'alunos' => $alunos]);
     } catch (\Throwable $th) {
       //throw $th;
@@ -133,9 +134,10 @@ class AlunoController extends BaseController
   public function getAlunoSaldoToFuncionario(Request $request)
   {
     try {
-      $aluno = Aluno::all();
+      $escolaId = auth()->user()->funcionario->escola_id;
+      $aluno = Aluno::where('escola_id', $escolaId)->get();
 
-      return view('funcionario.alunos.index', ['aluno' => [], 'alunos' => $aluno]);
+      return view('funcionario.alunos.index', ['alunos' => $aluno]);
     } catch (\Throwable $th) {
       return redirect()->route('funcionario.alunos.index')
         ->with('error', 'Falha ao listar alunos!');

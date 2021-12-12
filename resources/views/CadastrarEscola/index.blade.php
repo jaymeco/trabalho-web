@@ -72,10 +72,10 @@
           </div>
         </div>
         <button class="btn btn-primary mb-2" type="submit">Cadastrar</button>
-        <form id="logout-form" action="{{ route('logout.execute') }}" method="POST">
-          @csrf
-          <a class="nav-link" href="javascript: document.forms['logout-form'].submit();">Ir para o login</a>
-        </form>
+      </form>
+      <form id="logout-form" class="align-self-center" action="{{ route('logout.execute') }}" method="POST">
+        @csrf
+        <a class="nav-link" href="javascript: document.forms['logout-form'].submit();">Ir para o login</a>
       </form>
     </div>
     <div id="banner-image" class="col-md-6 bg-info d-flex flex-column align-items-center">
